@@ -1,32 +1,34 @@
 console.log("Hello World");
-function getComputerChoice(){
+
+function getComputerChoice() {
     const choices = ["rock", "paper", "scissor"];
-    const randomindex = Math.floor(Math.random() * choices.length);
-    return choices[randomindex]
+    const randomIndex = Math.floor(Math.random() * choices.length);
+    return choices[randomIndex];
 }
-const signbutton = document.querySelector("#signbutton");
 
-function getHumanChoice(){
-    signbutton.addEventListener("click", () =>{
-    let sign = prompt("Stone, Paper or Scissor?").toLowerCase();
-    const computerchoice = getComputerChoice();
-    console.log("You chose:", sign);
-    console.log("Computer chose:", computerchoice);
-    
+function playRound(humanChoice) {
+    const computerChoice = getComputerChoice();
+    console.log("You chose:", humanChoice);
+    console.log("Computer chose:", computerChoice);
 
-    if (sign == computerchoice){
-        return ("its a tie");
-    }else if(
-    (sign == stone && computerchoice == scissor)||
-    (sign == paper && computerchoice == stone)||
-    (sign == scissor && computerchoice == paper)
-    )
-    {
-        console.log("You Win!");
-    }else
-    {
-        console.log("You lose");
+    if (humanChoice === computerChoice) {
+        console.log("It's a tie!");
+    } else if (
+        (humanChoice === "rock" && computerChoice === "scissor") ||
+        (humanChoice === "paper" && computerChoice === "rock") ||
+        (humanChoice === "scissor" && computerChoice === "paper")
+    ) {
+        console.log("You win!");
+    } else {
+        console.log("You lose!");
     }
-})
 }
-getComputerChoice();
+
+// Attach event listeners to all buttons
+const buttons = document.querySelectorAll(".signbutton");
+buttons.forEach(button => {
+    button.addEventListener("click", () => {
+        const humanChoice = button.getAttribute("data-sign");
+        playRound(humanChoice);
+    });
+});
