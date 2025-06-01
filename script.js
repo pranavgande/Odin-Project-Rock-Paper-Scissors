@@ -1,5 +1,9 @@
 console.log("Hello World");
 
+let playerscore = 0;
+let computerscore = 0;
+const winningscore = 5;
+
 function getComputerChoice() {
     const choices = ["rock", "paper", "scissor"];
     const randomIndex = Math.floor(Math.random() * choices.length);
@@ -7,24 +11,36 @@ function getComputerChoice() {
 }
 
 function playRound(humanChoice) {
+    if (playerscore >= winningscore || computerscore >= winningscore) return;
+
     const computerChoice = getComputerChoice();
-    console.log("You chose:", humanChoice);
-    console.log("Computer chose:", computerChoice);
+    let resultText = "";
 
     if (humanChoice === computerChoice) {
-        console.log("It's a tie!");
+        resultText = `It's a tie! Both chose ${humanChoice}.`;
     } else if (
         (humanChoice === "rock" && computerChoice === "scissor") ||
         (humanChoice === "paper" && computerChoice === "rock") ||
         (humanChoice === "scissor" && computerChoice === "paper")
     ) {
-        console.log("You win!");
+        playerscore++;
+        resultText = `You win this round! ${humanChoice} beats ${computerChoice}.`;
     } else {
-        console.log("You lose!");
+        computerscore++;
+        resultText = `Computer wins this round! ${computerChoice} beats ${humanChoice}.`;
+    }
+
+    console.log(resultText);
+    console.log(`Score => You: ${playerscore}, Computer: ${computerscore}`);
+
+    // Win check
+    if (playerscore === winningscore) {
+        console.log("🎉 YOU WON THE GAME!");
+    } else if (computerscore === winningscore) {
+        console.log("💻 COMPUTER WON THE GAME!");
     }
 }
 
-// Attach event listeners to all buttons
 const buttons = document.querySelectorAll(".signbutton");
 buttons.forEach(button => {
     button.addEventListener("click", () => {
